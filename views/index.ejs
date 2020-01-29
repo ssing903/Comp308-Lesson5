@@ -1,0 +1,10 @@
+<% include ./partials/header.ejs %>
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="display-4">Welcome to <%= title %></h1>
+      <% if (title == "Contact") { %> 
+        <a href="/contact-list" class="btn btn-primary" role="button">Contact List</a>
+      <% } %>
+    </div>
+  </div>
+<% include ./partials/footer.ejs %>
