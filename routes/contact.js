@@ -19,7 +19,7 @@ router.get('/', (req,res,next) => {
             });
         }
     });
-});
+}); 
 
 /* GET Route for ADD page
     this will display Add Page */
@@ -48,5 +48,48 @@ router.post('/add',(req,res,next) => {
         }
     });
 });
+
+/* GET Route for EDIT Page 
+    this will display the edit page */
+router.get('/edit/:id', (req,res,next) => {
+    let id = req.params.id;
+    contactModel.findById(id,(err,contactObject) => {
+        if (err) {
+            console.error(err);
+            res.end(err);
+        }
+        else {
+            // show the edit view
+            res.render('contacts/edit',{
+                'title' : 'Edit Contact',
+                contact : contactObject
+            });
+        }
+    });
+});
+
+/* POST Request - Update the database with data to the database */
+router.post('/edit/:id',(req,res,next) => {
+    let id = req.params.id
+    let updatedContact = contactModel({
+        '_id' : id,
+        'FirstName' : req.body.FirstName,
+        'LastName' : req.body.LastName,
+        'Age' : req.body.Age
+    });
+
+    contactModel.update({_id:id},updatedContact,(err) => {
+        if (err) {
+            console.log(err);
+            res.end(err);
+        } 
+        else {
+            res.redirect('/contact-list')
+        }
+    });
+
+});
+
+
 
 module.exports = router;
